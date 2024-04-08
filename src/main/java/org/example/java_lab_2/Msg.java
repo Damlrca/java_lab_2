@@ -3,8 +3,8 @@ package org.example.java_lab_2;
 import java.util.ArrayList;
 
 public class Msg {
-    ArrayList<Point> points;
-    MsgAction action;
+    private ArrayList<Point> points;
+    private MsgAction action;
 
     public Msg(ArrayList<Point> p, MsgAction action) {
         this.points = p;

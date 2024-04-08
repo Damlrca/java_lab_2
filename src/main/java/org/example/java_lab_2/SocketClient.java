@@ -6,32 +6,36 @@ import java.io.*;
 import java.net.Socket;
 
 public class SocketClient {
-    Model m = BModel.build();
-    Gson gson = new Gson();
-    Socket cs;
-    InputStream is;
-    OutputStream os;
-    DataInputStream dis;
-    DataOutputStream dos;
-    boolean isServer = true;
+    private Model m = BModel.build();
+    private Gson gson = new Gson();
+    private Socket socket;
+    private InputStream is;
+    private OutputStream os;
+    private DataInputStream dis;
+    private DataOutputStream dos;
+    private boolean isServer = true;
 
-    public SocketClient(Socket cs, boolean isServer) {
-        this.cs = cs;
+    public SocketClient(Socket socket, boolean isServer) {
+        this.socket = socket;
         this.isServer = isServer;
 
         try {
-            os = cs.getOutputStream();
+            os = socket.getOutputStream();
             dos = new DataOutputStream(os);
         } catch (IOException e) {
             System.out.println("Error SocketClient(Socket cs)");
         }
 
-        new Thread(()->{run();}).start();
+        Thread socketClientThread = new Thread(() -> {
+            run();
+        });
+        socketClientThread.setDaemon(true);
+        socketClientThread.start();
     }
 
-    void run() {
+    private void run() {
         try {
-            is = cs.getInputStream();
+            is = socket.getInputStream();
             dis = new DataInputStream(is);
         } catch (IOException e) {
             System.out.println("Error run()");
@@ -40,22 +44,27 @@ public class SocketClient {
         while (true) {
             if (isServer) {
                 Msg msg = readMsg();
+                if (msg == null) {
+                    System.out.println("client (" + socket.getPort() + ") disconnected (or error thrown)");
+                    break;
+                }
                 if (msg.getAction() == MsgAction.ADD) {
-                    for (Point p : msg.getPoints()) {
-                        m.add(p);
-                    }
+                    m.add(msg.getPoints());
                 }
                 if (msg.getAction() == MsgAction.GET) {
-                    Resp resp = new Resp(m.getPoints());
-                    sendResp(resp);
+                    sendResp(new Resp(m.getPoints()));
                 }
-            }
-            else {
+            } else {
                 Resp r = readResp();
+                if (r == null) {
+                    System.out.println("server disconnected (or error thrown)");
+                    break;
+                }
                 m.set(r.getPoints());
             }
         }
     }
+
     public Resp readResp() {
         Resp r = null;
         try {
@@ -79,9 +88,9 @@ public class SocketClient {
     }
 
     public void sendResp(Resp resp) {
-        String respMsg = gson.toJson(resp);
+        String srtResp = gson.toJson(resp);
         try {
-            dos.writeUTF(respMsg);
+            dos.writeUTF(srtResp);
         } catch (IOException e) {
             System.out.println("Error sendResp(Resp resp)");
         }

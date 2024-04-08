@@ -1,9 +1,9 @@
 package org.example.java_lab_2;
 
 public class BModel {
-    static Model m = new Model();
+    private static Model model = new Model();
 
     public static Model build() {
-        return m;
+        return model;
     }
 }

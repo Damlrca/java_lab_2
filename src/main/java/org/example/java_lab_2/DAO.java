@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class DAO implements Iterable<Point> {
-    ArrayList<Point> allPoints = new ArrayList<>();
+    private ArrayList<Point> allPoints = new ArrayList<>();
 
     public void add(Point x) {
         allPoints.add(x);
@@ -17,6 +17,7 @@ public class DAO implements Iterable<Point> {
     public ArrayList<Point> getPoints() {
         return allPoints;
     }
+
     public void remove(Point x) {
         allPoints.remove(x);
     }

@@ -15,8 +15,6 @@ import java.util.ArrayList;
 public class viewController implements IObserver {
     Model m = BModel.build();
 
-    SocketClient scl;
-
     @FXML
     Pane viewPoints;
 
@@ -27,6 +25,7 @@ public class viewController implements IObserver {
 
     int port = 3124;
     InetAddress ip = null;
+    SocketClient scl;
 
     @FXML
     void connect() {
@@ -41,8 +40,7 @@ public class viewController implements IObserver {
             scl = new SocketClient(cs, false);
 
             scl.sendMsg(new Msg(null, MsgAction.GET));
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error in connect()");
         }
     }
@@ -52,17 +50,16 @@ public class viewController implements IObserver {
     void mouseEvnt(MouseEvent evn) {
         if (scl != null) {
             ArrayList<Point> allp = new ArrayList<>();
-            allp.add(new Point((int)evn.getX(), (int)evn.getY()));
+            allp.add(new Point((int) evn.getX(), (int) evn.getY()));
             scl.sendMsg(new Msg(allp, MsgAction.ADD));
-        }
-        else {
-            m.add(new Point((int) evn.getX(), (int) evn.getY()));
+        } else {
+            // m.add(new Point((int) evn.getX(), (int) evn.getY()));
         }
     }
 
     @Override
     public void event(Model m) {
-        Platform.runLater( () -> {
+        Platform.runLater(() -> {
             viewPoints.getChildren().removeAll();
             for (Point p : m) {
                 Circle circle = new Circle(p.getX(), p.getY(), 10);

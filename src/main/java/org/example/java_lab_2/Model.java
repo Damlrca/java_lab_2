@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Model implements Iterable<Point> {
-    DAO dao = new DAO();
-    ArrayList<IObserver> allObs = new ArrayList<>();
+    private DAO dao = new DAO();
+    private ArrayList<IObserver> allObs = new ArrayList<>();
 
     public void event() {
         for (IObserver o : allObs) {
@@ -28,6 +28,13 @@ public class Model implements Iterable<Point> {
 
     public void add(Point x) {
         dao.add(x);
+        event();
+    }
+
+    public void add(ArrayList<Point> x) {
+        for (Point p : x) {
+            dao.add(p);
+        }
         event();
     }
 

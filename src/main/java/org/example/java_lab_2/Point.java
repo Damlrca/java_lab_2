@@ -1,7 +1,7 @@
 package org.example.java_lab_2;
 
 public class Point {
-    public int x, y;
+    private int x = 0, y = 0;
 
     public Point(int x, int y) {
         this.x = x;
