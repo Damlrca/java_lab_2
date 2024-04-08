@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="main_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.java_lab_2.Lab2_Controller">
+   <children>
+      <Button fx:id="button_play" layoutX="15.0" layoutY="380.0" mnemonicParsing="false" onAction="#play_click" prefHeight="26.0" prefWidth="82.0" text="Начать игру" />
+      <Button fx:id="button_stop" layoutX="110.0" layoutY="380.0" mnemonicParsing="false" onAction="#stop_click" prefHeight="26.0" prefWidth="116.0" text="Остановить игру" />
+      <Button fx:id="button_fire" layoutX="255.0" layoutY="379.0" mnemonicParsing="false" onAction="#fire_click" prefHeight="26.0" prefWidth="82.0" text="Выстрел" />
+      <Button fx:id="button_pause" layoutX="366.0" layoutY="380.0" mnemonicParsing="false" onAction="#pause_click" text="Пауза" />
+      <Button fx:id="button_continue" layoutX="426.0" layoutY="380.0" mnemonicParsing="false" onAction="#continue_click" text="Продолжить" />
+      <Rectangle fx:id="rect_1" arcHeight="5.0" arcWidth="5.0" height="351.0" layoutX="14.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" width="498.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="18.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="0.8863636408791398" startX="0.12121212753382596" startY="0.056818181818181816">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.2638206481933594" green="0.6243320107460022" blue="0.7052631378173828" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.4851116625310173">
+                     <color>
+                        <Color red="0.43360623717308044" green="0.638975977897644" blue="0.8736842274665833" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Line fx:id="line_1" endY="350.0" layoutX="384.0" layoutY="19.0" />
+      <Line fx:id="line_2" endX="3.0517578125E-5" endY="350.0" layoutX="448.0" layoutY="19.0" />
+      <Circle fx:id="target_1" layoutX="384.0" layoutY="76.0" radius="30.0" stroke="BLACK" strokeType="INSIDE">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" cycleMethod="REPEAT" radius="0.15">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.4992319508448542">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill></Circle>
+      <Circle fx:id="target_2" layoutX="448.0" layoutY="265.0" radius="15.0" stroke="BLACK" strokeType="INSIDE">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" cycleMethod="REPEAT" radius="0.15">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.4992319508448542">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill></Circle>
+      <Polygon fx:id="player_1" fill="#f4dc21" layoutX="31.0" layoutY="144.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0">
+        <points>
+          <Double fx:value="0.0" />
+          <Double fx:value="0.0" />
+          <Double fx:value="25.0" />
+          <Double fx:value="50.0" />
+          <Double fx:value="0.0" />
+          <Double fx:value="100.0" />
+        </points>
+      </Polygon>
+      <Text fx:id="label_1" fill="WHITE" layoutX="30.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество выстрелов: -">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fx:id="label_2" fill="WHITE" layoutX="31.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Счёт игрока: -">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
