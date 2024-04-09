@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
@@ -16,6 +17,9 @@
       <Pane prefHeight="500.0" prefWidth="250.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <Pane prefHeight="50.0" prefWidth="900.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="50.0" prefWidth="900.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="button_fire" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#fire" text="Выстрел" />
+         </children></Pane>
    </bottom>
 </BorderPane>

@@ -35,7 +35,7 @@ public class Lab2_Player {
                 double bx = b.getLayoutX() + b.getWidth() / 2;
                 double by = b.getLayoutY() + b.getHeight() / 2;
                 double dx = c.getLayoutX() - bx;
-                double dy = c.getCenterY() - by;
+                double dy = c.getLayoutY() - by;
                 double d2 = dx * dx + dy * dy;
                 if (d2 <= c.getRadius() * c.getRadius()) {
                     count_score += t.getCost();
@@ -61,6 +61,7 @@ public class Lab2_Player {
         bullet.setStroke(Paint.valueOf("BLACK"));
         bullet.setStrokeType(StrokeType.INSIDE);
         parent_pane.getChildren().add(bullet);
+        bullets.add(bullet);
         count_bullets++;
     }
 
