@@ -1,4 +1,4 @@
-package org.example.java_lab_2;
+package org.example.java_lab;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -10,7 +10,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Text;
 
-public class Lab2_Controller {
+public class Lab1_Controller {
     @FXML
     AnchorPane main_pane;
 

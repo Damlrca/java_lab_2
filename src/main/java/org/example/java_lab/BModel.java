@@ -1,4 +1,4 @@
-package org.example.java_lab_2;
+package org.example.java_lab;
 
 public class BModel {
     private static Model model = new Model();

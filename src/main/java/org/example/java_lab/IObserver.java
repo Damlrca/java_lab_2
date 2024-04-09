@@ -1,4 +1,4 @@
-package org.example.java_lab_2;
+package org.example.java_lab;
 
 public interface IObserver {
     void event(Model model);

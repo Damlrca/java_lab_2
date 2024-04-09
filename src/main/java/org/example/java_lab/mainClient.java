@@ -1,4 +1,4 @@
-package org.example.java_lab_2;
+package org.example.java_lab;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,12 +7,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Lab2_Application extends Application {
+public class mainClient extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Lab2_Application.class.getResource("main-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Lab1_Application.class.getResource("view-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("lab2 : Меткий стрелок!");
+        stage.setTitle("view view");
         stage.setScene(scene);
         stage.show();
     }

@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="main_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.java_lab_2.Lab2_Controller">
+<AnchorPane fx:id="main_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.java_lab.Lab1_Controller">
    <children>
       <Button fx:id="button_play" layoutX="15.0" layoutY="380.0" mnemonicParsing="false" onAction="#play_click" prefHeight="26.0" prefWidth="82.0" text="Начать игру" />
       <Button fx:id="button_stop" layoutX="110.0" layoutY="380.0" mnemonicParsing="false" onAction="#stop_click" prefHeight="26.0" prefWidth="116.0" text="Остановить игру" />

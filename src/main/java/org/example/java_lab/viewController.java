@@ -1,4 +1,4 @@
-package org.example.java_lab_2;
+package org.example.java_lab;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -13,14 +13,14 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class viewController implements IObserver {
-    Model m = BModel.build();
+    Model model = BModel.build();
 
     @FXML
     Pane viewPoints;
 
     @FXML
     public void initialize() {
-        m.addObserver(this);
+        model.addObserver(this);
     }
 
     int port = 3124;
@@ -49,8 +49,8 @@ public class viewController implements IObserver {
     @FXML
     void mouseEvnt(MouseEvent evn) {
         if (scl != null) {
-            ArrayList<Point> allp = new ArrayList<>();
-            allp.add(new Point((int) evn.getX(), (int) evn.getY()));
+            ArrayList<Lab_2_Point> allp = new ArrayList<>();
+            allp.add(new Lab_2_Point((int) evn.getX(), (int) evn.getY()));
             scl.sendMsg(new Msg(allp, MsgAction.ADD));
         } else {
             // m.add(new Point((int) evn.getX(), (int) evn.getY()));
@@ -58,10 +58,10 @@ public class viewController implements IObserver {
     }
 
     @Override
-    public void event(Model m) {
+    public void event(Model model) {
         Platform.runLater(() -> {
             viewPoints.getChildren().removeAll();
-            for (Point p : m) {
+            for (Lab_2_Point p : model) {
                 Circle circle = new Circle(p.getX(), p.getY(), 10);
                 circle.setFill(Color.RED);
                 viewPoints.getChildren().add(circle);

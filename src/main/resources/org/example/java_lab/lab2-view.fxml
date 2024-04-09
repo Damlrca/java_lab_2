@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.java_lab.Lab2_Controller">
+   <center>
+      <Pane prefHeight="500.0" prefWidth="650.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fff775" height="500.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
+            <Line endY="500.0" layoutX="450.0" />
+            <Line endY="500.0" layoutX="550.0" />
+         </children></Pane>
+   </center>
+   <right>
+      <Pane prefHeight="500.0" prefWidth="250.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <Pane prefHeight="50.0" prefWidth="900.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
