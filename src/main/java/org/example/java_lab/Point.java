@@ -1,9 +1,9 @@
 package org.example.java_lab;
 
-public class Lab_2_Point {
+public class Point {
     private float x = 0, y = 0;
 
-    public Lab_2_Point(float x, float y) {
+    public Point(float x, float y) {
         this.x = x;
         this.y = y;
     }

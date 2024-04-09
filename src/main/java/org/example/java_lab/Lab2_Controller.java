@@ -3,6 +3,8 @@ package org.example.java_lab;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class Lab2_Controller {
     @FXML
@@ -12,7 +14,7 @@ public class Lab2_Controller {
 
     public void initialize() {
         targets = new Lab2_Targets(main_pane);
-        player = new Lab2_Player("player", 20, 250, main_pane);
+        player = new Lab2_Player("player", 45, 250, main_pane, Color.web("#28d622"));
 
         new Thread(() -> {
             try {

@@ -3,15 +3,15 @@ package org.example.java_lab;
 import java.util.ArrayList;
 
 public class Msg {
-    private ArrayList<Lab_2_Point> points;
+    private ArrayList<Point> points;
     private MsgAction action;
 
-    public Msg(ArrayList<Lab_2_Point> p, MsgAction action) {
+    public Msg(ArrayList<Point> p, MsgAction action) {
         this.points = p;
         this.action = action;
     }
 
-    public ArrayList<Lab_2_Point> getPoints() {
+    public ArrayList<Point> getPoints() {
         return points;
     }
 

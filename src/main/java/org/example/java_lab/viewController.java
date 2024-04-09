@@ -49,8 +49,8 @@ public class viewController implements IObserver {
     @FXML
     void mouseEvnt(MouseEvent evn) {
         if (scl != null) {
-            ArrayList<Lab_2_Point> allp = new ArrayList<>();
-            allp.add(new Lab_2_Point((int) evn.getX(), (int) evn.getY()));
+            ArrayList<Point> allp = new ArrayList<>();
+            allp.add(new Point((int) evn.getX(), (int) evn.getY()));
             scl.sendMsg(new Msg(allp, MsgAction.ADD));
         } else {
             // m.add(new Point((int) evn.getX(), (int) evn.getY()));
@@ -61,7 +61,7 @@ public class viewController implements IObserver {
     public void event(Model model) {
         Platform.runLater(() -> {
             viewPoints.getChildren().removeAll();
-            for (Lab_2_Point p : model) {
+            for (Point p : model) {
                 Circle circle = new Circle(p.getX(), p.getY(), 10);
                 circle.setFill(Color.RED);
                 viewPoints.getChildren().add(circle);

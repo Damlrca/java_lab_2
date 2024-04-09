@@ -1,7 +1,7 @@
 package org.example.java_lab;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -17,13 +17,21 @@ public class Lab2_Player {
     private ArrayList<Rectangle> bullets = new ArrayList<>();
     private Pane parent_pane;
     private Polygon player_triangle;
+    private Color player_color;
 
-    public Lab2_Player(String player_name, double player_x, double player_y, Pane parent_pane) {
+    public Lab2_Player(String player_name, double player_x, double player_y, Pane parent_pane, Color player_color) {
         this.player_name = player_name;
         this.player_x = player_x;
         this.player_y = player_y;
         this.parent_pane = parent_pane;
+        this.player_color = player_color;
         // TODO player_triangle
+        player_triangle = new Polygon(-25.0, -50.0, 0.0, 0.0, -25.0, 50.0);
+        player_triangle.setFill(player_color);
+        player_triangle.setStroke(Color.BLACK);
+        player_triangle.setLayoutX(player_x);
+        player_triangle.setLayoutY(player_y);
+        parent_pane.getChildren().add(player_triangle);
     }
 
     public void nextTick(Lab2_Targets targets) {
@@ -55,10 +63,10 @@ public class Lab2_Player {
         bullet.setArcWidth(5.0);
         bullet.setHeight(10.0);
         bullet.setWidth(10.0);
-        bullet.setLayoutX(player_x);
-        bullet.setLayoutY(player_y);
-        bullet.setFill(Paint.valueOf("#28d622"));
-        bullet.setStroke(Paint.valueOf("BLACK"));
+        bullet.setLayoutX(player_x - 5.0);
+        bullet.setLayoutY(player_y - 5.0);
+        bullet.setFill(player_color);
+        bullet.setStroke(Color.BLACK);
         bullet.setStrokeType(StrokeType.INSIDE);
         parent_pane.getChildren().add(bullet);
         bullets.add(bullet);
@@ -66,8 +74,9 @@ public class Lab2_Player {
     }
 
     public void deletePlayer() {
-        // TODO player_triangle
         removeBullets(bullets);
+        // TODO player_triangle
+        parent_pane.getChildren().remove(player_triangle);
     }
 
     public void removeBullets(ArrayList<Rectangle> bullets_to_remove) {
