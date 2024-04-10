@@ -2,12 +2,12 @@ package org.example.java_lab;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class Lab2_Controller {
     private Lab2_Model model = Lab2_BModel.getModel();
@@ -16,6 +16,9 @@ public class Lab2_Controller {
 
     @FXML
     Pane main_pane;
+
+    @FXML
+    TextField textField_name;
 
     public void initialize() {
         model.addObserver((model) -> {
@@ -30,7 +33,7 @@ public class Lab2_Controller {
     @FXML
     public void fire() {
         if (scl != null) {
-            scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.FIRE));
+            scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.FIRE, null));
         }
     }
 
@@ -47,6 +50,8 @@ public class Lab2_Controller {
             System.out.println("Client start");
 
             scl = new Lab2_SocketClient(socket, false);
+
+            scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.NAME_TO_LOGIN, textField_name.getText()));
         } catch (IOException ex) {
             System.out.println("Error in connect()");
         }

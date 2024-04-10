@@ -7,6 +7,9 @@ public class Lab2_DataAccessObject {
         gameState.nextTick();
     }
 
+    public  void fire(String playerName) {
+        gameState.fire(playerName);
+    }
     public Lab2_GameState getGameState() {
         return gameState;
     }

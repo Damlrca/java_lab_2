@@ -19,6 +19,8 @@ public class Lab2_SocketClient {
         this.sendResp(r);
     };
 
+    private String playerName;
+
     public Lab2_SocketClient(Socket socket, boolean isServer) {
         this.socket = socket;
         this.isServer = isServer;
@@ -54,7 +56,10 @@ public class Lab2_SocketClient {
                     break;
                 }
                 if (msg.getMsgAction() == Lab2_MsgAction.FIRE) {
-                    model.getGameState().getPlayers().getFirst().newBullet();
+                    model.fire(playerName);
+                }
+                if (msg.getMsgAction() == Lab2_MsgAction.NAME_TO_LOGIN) {
+                    playerName = msg.getPlayerName();
                 }
             } else {
                 Lab2_Resp r = readResp();

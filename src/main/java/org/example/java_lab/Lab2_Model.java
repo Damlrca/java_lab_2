@@ -31,6 +31,11 @@ public class Lab2_Model {
         event();
     }
 
+    public void fire(String playerName) {
+        dao.fire(playerName);
+        event();
+    }
+
     public Lab2_GameState getGameState() {
         return dao.getGameState();
     }
