@@ -19,7 +19,8 @@
    <bottom>
       <Pane prefHeight="50.0" prefWidth="900.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="button_fire" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#fire" text="Выстрел" />
+            <Button fx:id="button_fire" layoutX="121.0" layoutY="13.0" mnemonicParsing="false" onAction="#fire" text="Выстрел" />
+            <Button fx:id="button_connect" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#connect" text="Подключиться" />
          </children></Pane>
    </bottom>
 </BorderPane>

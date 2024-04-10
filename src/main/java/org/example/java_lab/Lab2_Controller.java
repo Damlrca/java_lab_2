@@ -3,37 +3,52 @@ package org.example.java_lab;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
 
 public class Lab2_Controller {
+    private Lab2_Model model = Lab2_BModel.getModel();
+
+    private Lab2_ClientGameState clientGameState = new Lab2_ClientGameState();
+
     @FXML
     Pane main_pane;
-    Lab2_Targets targets;
-    Lab2_Player player;
 
     public void initialize() {
-        targets = new Lab2_Targets(main_pane);
-        player = new Lab2_Player("player", 45, 250, main_pane, Color.web("#28d622"));
-
-        new Thread(() -> {
-            try {
-                while (true) {
-                    Platform.runLater(() -> {
-                        targets.nextTick();
-                        player.nextTick(targets);
-                    });
-                    Thread.sleep(100);
-                }
-            }
-            catch (InterruptedException ie) {
-
-            }
-        }).start();
+        model.addObserver((model) -> {
+            Platform.runLater(() -> {
+                clientGameState.removeFromPane(main_pane);
+                clientGameState.update(model.getGameState());
+                clientGameState.addToPane(main_pane);
+            });
+        });
     }
 
     @FXML
     public void fire() {
-        player.newBullet();
+//        for (Lab2_Player player : players) {
+//            player.newBullet();
+//        }
     }
+
+    private int port = 3124;
+    private InetAddress ip = null;
+    private Lab2_SocketClient scl = null;
+
+    @FXML
+    public void connect() {
+        if (scl != null) return;
+        try {
+            ip = InetAddress.getLocalHost();
+            Socket socket = new Socket(ip, port);
+            System.out.println("Client start");
+
+            scl = new Lab2_SocketClient(socket, false);
+        } catch (IOException ex) {
+            System.out.println("Error in connect()");
+        }
+    }
+
 }
