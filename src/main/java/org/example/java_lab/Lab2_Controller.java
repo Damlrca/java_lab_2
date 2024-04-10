@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Lab2_Controller {
     private Lab2_Model model = Lab2_BModel.getModel();
@@ -28,9 +29,9 @@ public class Lab2_Controller {
 
     @FXML
     public void fire() {
-//        for (Lab2_Player player : players) {
-//            player.newBullet();
-//        }
+        if (scl != null) {
+            scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.FIRE));
+        }
     }
 
     private int port = 3124;

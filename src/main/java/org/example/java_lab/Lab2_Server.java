@@ -23,10 +23,8 @@ public class Lab2_Server {
                 Socket socket = ss.accept();
                 System.out.println("Client connected (" + socket.getPort() + ")");
                 Lab2_SocketClient scl = new Lab2_SocketClient(socket, true);
-                model.addObserver((model) -> {
-                    Lab2_Resp r = new Lab2_Resp(Lab2_RespAction.GAME_STATE, model.getGameState());
-                    scl.sendResp(r);
-                });
+                Lab2_IObserver observer = scl.getObserver();
+                model.addObserver(observer);
             }
         } catch (IOException ex) {
             System.out.println("Error StartServer()");
@@ -39,7 +37,6 @@ public class Lab2_Server {
         Thread gameThread = new Thread(()->{
             while (true) {
                 model.nextTick();
-                model.getGameState().getPlayers().getFirst().newBullet();
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {

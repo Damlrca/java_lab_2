@@ -14,6 +14,10 @@ public class Lab2_SocketClient {
     private DataInputStream dis;
     private DataOutputStream dos;
     private boolean isServer = true;
+    private Lab2_IObserver observer = (model) -> {
+        Lab2_Resp r = new Lab2_Resp(Lab2_RespAction.GAME_STATE, model.getGameState());
+        this.sendResp(r);
+    };
 
     public Lab2_SocketClient(Socket socket, boolean isServer) {
         this.socket = socket;
@@ -43,18 +47,15 @@ public class Lab2_SocketClient {
 
         while (true) {
             if (isServer) {
-//                Msg msg = readMsg();
-//                if (msg == null) {
-//                    System.out.println("client (" + socket.getPort() + ") disconnected (or error thrown)");
-//                    break;
-//                }
-//                if (msg.getAction() == MsgAction.ADD) {
-//                    m.add(msg.getPoints());
-//                }
-//                if (msg.getAction() == MsgAction.GET) {
-//                    sendResp(new Resp(m.getPoints()));
-//                }
-
+                Lab2_Msg msg = readMsg();
+                if (msg == null) {
+                    System.out.println("client (" + socket.getPort() + ") disconnected (or error thrown)");
+                    model.removeObserver(observer);
+                    break;
+                }
+                if (msg.getMsgAction() == Lab2_MsgAction.FIRE) {
+                    model.getGameState().getPlayers().getFirst().newBullet();
+                }
             } else {
                 Lab2_Resp r = readResp();
                 if (r == null) {
@@ -84,5 +85,29 @@ public class Lab2_SocketClient {
             System.out.println("Error Lab2_Resp readResp()");
         }
         return r;
+    }
+
+    public void sendMsg(Lab2_Msg msg) {
+        String strMsg = gson.toJson(msg);
+        try {
+            dos.writeUTF(strMsg);
+        } catch (IOException e) {
+            System.out.println("Error void sendMsg(Lab2_Msg msg)");
+        }
+    }
+
+    public Lab2_Msg readMsg() {
+        Lab2_Msg msg = null;
+        try {
+            String msgStr = dis.readUTF();
+            msg = gson.fromJson(msgStr, Lab2_Msg.class);
+        } catch (IOException e) {
+            System.out.println("Error readMsg()");
+        }
+        return msg;
+    }
+
+    public Lab2_IObserver getObserver() {
+        return observer;
     }
 }

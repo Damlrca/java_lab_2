@@ -7,12 +7,22 @@ public class Lab2_Model {
     private ArrayList<Lab2_IObserver> allObs = new ArrayList<>();
 
     public void addObserver(Lab2_IObserver o) {
-        allObs.add(o);
+        synchronized (allObs) {
+            allObs.add(o);
+        }
+    }
+
+    public void removeObserver(Lab2_IObserver o) {
+        synchronized (allObs) {
+            allObs.remove(o);
+        }
     }
 
     public void event() {
-        for (Lab2_IObserver o : allObs) {
-            o.event(this);
+        synchronized (allObs) {
+            for (Lab2_IObserver o : allObs) {
+                o.event(this);
+            }
         }
     }
 
