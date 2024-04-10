@@ -13,6 +13,7 @@ public class Lab2_Player {
     private double playerX, playerY;
     private ArrayList<Point> bullets = new ArrayList<>();
     private String playerColor;
+    private Lab2_PlayerStatus status = Lab2_PlayerStatus.PAUSE;
 
     public Lab2_Player(String playerName, double playerX, double playerY, String playerColor) {
         this.playerName = playerName;
@@ -74,5 +75,13 @@ public class Lab2_Player {
 
     public String getPlayerColor() {
         return playerColor;
+    }
+
+    public Lab2_PlayerStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(Lab2_PlayerStatus status) {
+        this.status = status;
     }
 }

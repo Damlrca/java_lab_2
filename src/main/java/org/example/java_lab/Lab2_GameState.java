@@ -7,11 +7,22 @@ public class Lab2_GameState {
     private Lab2_Targets targets = new Lab2_Targets();
     private ArrayList<Lab2_Player> players = new ArrayList<>();
     private Lab2_GameStatus gameStatus = Lab2_GameStatus.ONGOING;
+    private String text = new String();
 
     public void nextTick() {
         targets.nextTick();
         for (Lab2_Player player : players) {
             player.nextTick(targets);
+        }
+        generateText();
+    }
+
+    private void generateText() {
+        text = "";
+        for (Lab2_Player player : players) {
+            text += "Игрок: " + player.getPlayerName() + "\n";
+            text += "Счёт игрока: " + player.getCountScore() + "\n";
+            text += "Число выстрелов: " + player.getCountBullets() + "\n";
         }
     }
 
@@ -33,5 +44,9 @@ public class Lab2_GameState {
 
     public Lab2_GameStatus getGameStatus() {
         return gameStatus;
+    }
+
+    public String getText() {
+        return text;
     }
 }

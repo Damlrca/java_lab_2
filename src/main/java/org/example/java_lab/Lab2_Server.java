@@ -34,6 +34,7 @@ public class Lab2_Server {
     public static void main(String[] args) {
         model.getGameState().getPlayers().add(new Lab2_Player("player1", 45, 500.0 / 3, "#28d622"));
         model.getGameState().getPlayers().add(new Lab2_Player("player2", 45, 500.0 / 3 * 2, "#bc8f8f"));
+
         Thread gameThread = new Thread(()->{
             while (true) {
                 model.nextTick();

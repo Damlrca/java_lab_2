@@ -14,12 +14,13 @@ public class Lab2_SocketClient {
     private DataInputStream dis;
     private DataOutputStream dos;
     private boolean isServer = true;
+
     private Lab2_IObserver observer = (model) -> {
         Lab2_Resp r = new Lab2_Resp(Lab2_RespAction.GAME_STATE, model.getGameState());
         this.sendResp(r);
     };
-
     private String playerName;
+    private boolean successfullyConnected = false;
 
     public Lab2_SocketClient(Socket socket, boolean isServer) {
         this.socket = socket;
@@ -28,6 +29,8 @@ public class Lab2_SocketClient {
         try {
             os = socket.getOutputStream();
             dos = new DataOutputStream(os);
+            is = socket.getInputStream();
+            dis = new DataInputStream(is);
         } catch (IOException e) {
             System.out.println("Error SocketClient(Socket cs)");
         }
@@ -40,34 +43,60 @@ public class Lab2_SocketClient {
     }
 
     private void run() {
-        try {
-            is = socket.getInputStream();
-            dis = new DataInputStream(is);
-        } catch (IOException e) {
-            System.out.println("Error run()");
-        }
-
         while (true) {
-            if (isServer) {
-                Lab2_Msg msg = readMsg();
-                if (msg == null) {
-                    System.out.println("client (" + socket.getPort() + ") disconnected (or error thrown)");
-                    model.removeObserver(observer);
-                    break;
-                }
-                if (msg.getMsgAction() == Lab2_MsgAction.FIRE) {
-                    model.fire(playerName);
-                }
-                if (msg.getMsgAction() == Lab2_MsgAction.NAME_TO_LOGIN) {
-                    playerName = msg.getPlayerName();
+            if (successfullyConnected) {
+                if (isServer) {
+                    Lab2_Msg msg = readMsg();
+                    if (msg == null) {
+                        System.out.println("client (" + socket.getPort() + ") disconnected (or error thrown)");
+                        model.removeObserver(observer);
+                        break;
+                    }
+                    if (msg.getMsgAction() == Lab2_MsgAction.GET) {
+
+                    }
+                    if (msg.getMsgAction() == Lab2_MsgAction.FIRE) {
+                        model.fire(playerName);
+                    }
+                    if (msg.getMsgAction() == Lab2_MsgAction.PAUSE) {
+
+                    }
+                    if (msg.getMsgAction() == Lab2_MsgAction.READY) {
+
+                    }
+                } else {
+                    Lab2_Resp r = readResp();
+                    if (r == null) {
+                        System.out.println("server disconnected (or error thrown)");
+                        break;
+                    }
+                    model.setGameState(r.getGameState());
                 }
             } else {
-                Lab2_Resp r = readResp();
-                if (r == null) {
-                    System.out.println("server disconnected (or error thrown)");
-                    break;
+                if (isServer) {
+                    Lab2_Msg msg = readMsg();
+                    if (msg == null) {
+                        System.out.println("client (" + socket.getPort() + ") disconnected (or error thrown)");
+                        model.removeObserver(observer);
+                        break;
+                    }
+                    if (msg.getMsgAction() == Lab2_MsgAction.LOGIN) {
+                        playerName = msg.getPlayerName();
+
+                        successfullyConnected = true;
+                        sendResp(new Lab2_Resp(Lab2_RespAction.LOGIN_OK, null));
+                    }
                 }
-                model.setGameState(r.getGameState());
+                else {
+                    Lab2_Resp r = readResp();
+                    if (r == null) {
+                        System.out.println("server disconnected (or error thrown)");
+                        break;
+                    }
+                    if (r.getRespAction() == Lab2_RespAction.LOGIN_OK) {
+                        successfullyConnected = true;
+                    }
+                }
             }
         }
     }
@@ -114,5 +143,9 @@ public class Lab2_SocketClient {
 
     public Lab2_IObserver getObserver() {
         return observer;
+    }
+
+    public boolean isSuccessfullyConnected() {
+        return successfullyConnected;
     }
 }

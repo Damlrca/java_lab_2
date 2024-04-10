@@ -1,5 +1,6 @@
 package org.example.java_lab;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 public class Lab2_ClientGameState {
     private ArrayList<Shape> shapes = new ArrayList<>();
+    private String text;
 
     public Lab2_ClientGameState() {
     }
@@ -46,11 +48,13 @@ public class Lab2_ClientGameState {
                 shapes.add(rectangle);
             }
         }
+        text = gameState.getText();
     }
-    public void addToPane(Pane parentPane) {
+    public void addToPane(Pane parentPane, Label textLabel) {
         for (Shape shape : shapes) {
             parentPane.getChildren().add(shape);
         }
+        textLabel.setText(text);
     }
 
     public void removeFromPane(Pane parentPane) {

@@ -2,6 +2,7 @@ package org.example.java_lab;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
@@ -20,12 +21,17 @@ public class Lab2_Controller {
     @FXML
     TextField textField_name;
 
+    @FXML
+    Label textLabel;
+
     public void initialize() {
         model.addObserver((model) -> {
             Platform.runLater(() -> {
-                clientGameState.removeFromPane(main_pane);
-                clientGameState.update(model.getGameState());
-                clientGameState.addToPane(main_pane);
+                if (model.getGameState().getGameStatus() == Lab2_GameStatus.ONGOING) {
+                    clientGameState.removeFromPane(main_pane);
+                    clientGameState.update(model.getGameState());
+                    clientGameState.addToPane(main_pane, textLabel);
+                }
             });
         });
     }
@@ -43,17 +49,19 @@ public class Lab2_Controller {
 
     @FXML
     public void connect() {
-        if (scl != null) return;
-        try {
-            ip = InetAddress.getLocalHost();
-            Socket socket = new Socket(ip, port);
-            System.out.println("Client start");
+        if (scl == null) {
+            try {
+                ip = InetAddress.getLocalHost();
+                Socket socket = new Socket(ip, port);
+                System.out.println("Client start");
 
-            scl = new Lab2_SocketClient(socket, false);
-
-            scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.NAME_TO_LOGIN, textField_name.getText()));
-        } catch (IOException ex) {
-            System.out.println("Error in connect()");
+                scl = new Lab2_SocketClient(socket, false);
+            } catch (IOException ex) {
+                System.out.println("Error in connect()");
+            }
+        }
+        if (!scl.isSuccessfullyConnected()) {
+            scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.LOGIN, textField_name.getText()));
         }
     }
 
