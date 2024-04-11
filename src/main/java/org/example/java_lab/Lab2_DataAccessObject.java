@@ -7,9 +7,26 @@ public class Lab2_DataAccessObject {
         gameState.nextTick();
     }
 
-    public  void fire(String playerName) {
+    public void fire(String playerName) {
         gameState.fire(playerName);
     }
+
+    public boolean tryAddPlayer(String playerName) {
+        return gameState.tryAddPlayer(playerName);
+    }
+
+    public void setReady(String playerName) {
+        gameState.setReady(playerName);
+    }
+
+    public void setPause(String playerName) {
+        gameState.setPause(playerName);
+    }
+
+    public void resetGame(String additionalText) {
+        gameState.resetGame(additionalText);
+    }
+
     public Lab2_GameState getGameState() {
         return gameState;
     }

@@ -29,8 +29,8 @@
             <Button fx:id="button_fire" layoutX="465.0" layoutY="13.0" mnemonicParsing="false" onAction="#fire" text="Выстрел" />
             <Button fx:id="button_connect" layoutX="172.0" layoutY="13.0" mnemonicParsing="false" onAction="#connect" text="Подключиться" />
             <TextField fx:id="textField_name" layoutX="14.0" layoutY="13.0" promptText="enter your name" />
-            <Button layoutX="292.0" layoutY="13.0" mnemonicParsing="false" text="Готов" />
-            <Button layoutX="348.0" layoutY="13.0" mnemonicParsing="false" text="Пауза" />
+            <Button layoutX="292.0" layoutY="13.0" mnemonicParsing="false" onAction="#ready" text="Готов" />
+            <Button layoutX="348.0" layoutY="13.0" mnemonicParsing="false" onAction="#pause" text="Пауза" />
          </children></Pane>
    </bottom>
 </BorderPane>

@@ -49,6 +49,13 @@ public class Lab2_Player {
         countBullets++;
     }
 
+    public void resetPlayer() {
+        countScore = 0;
+        countBullets = 0;
+        bullets.clear();
+        status = Lab2_PlayerStatus.PAUSE;
+    }
+
     public String getPlayerName() {
         return playerName;
     }

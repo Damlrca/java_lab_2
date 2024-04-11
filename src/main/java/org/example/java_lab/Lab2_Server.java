@@ -1,7 +1,5 @@
 package org.example.java_lab;
 
-import javafx.scene.paint.Color;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -9,11 +7,56 @@ import java.net.Socket;
 
 public class Lab2_Server {
     private static Lab2_Model model = Lab2_BModel.getModel();
+    private static Object gameThreadMutex = new Object();
+    private static Thread gameThread = new Thread(()->{
+        try {
+            while (true) {
+                if (model.getGameState().getGameStatus() == Lab2_GameStatus.ONGOING) {
+                    model.nextTick();
 
-    private int port = 3124;
-    private InetAddress ip = null;
+                    Lab2_GameState gameState = model.getGameState();
+                    int mx = -1, count_mx = 0;
+                    for (Lab2_Player player : gameState.getPlayers()) {
+                        if (player.getCountScore() > mx) {
+                            mx = player.getCountScore();
+                            count_mx = 1;
+                        }
+                        else if (player.getCountScore() == mx) {
+                            count_mx++;
+                        }
+                    }
+                    if (mx >= 6 && count_mx == 1) {
+                        String playerName = "";
+                        for (Lab2_Player player : gameState.getPlayers()) {
+                            if (player.getCountScore() == mx)
+                                playerName = player.getPlayerName();
+                        }
+                        model.resetGame("Победитель: " + playerName);
+                    }
+                    else {
+                        Thread.sleep(100);
+                    }
+                }
+                else {
+                    synchronized (gameThreadMutex) {
+                        gameThreadMutex.wait();
+                    }
+                }
+            }
+        } catch (InterruptedException e) {
+            System.out.println("gameThread thrown");
+        }
+    });
 
-    public void StartServer() {
+    public static void wakeUpGameThread() {
+        synchronized (gameThreadMutex) {
+            gameThreadMutex.notifyAll();
+        }
+    }
+    private static int port = 3124;
+    private static InetAddress ip = null;
+
+    public static void StartServer() {
         ServerSocket ss;
         try {
             ip = InetAddress.getLocalHost();
@@ -32,22 +75,9 @@ public class Lab2_Server {
     }
 
     public static void main(String[] args) {
-        model.getGameState().getPlayers().add(new Lab2_Player("player1", 45, 500.0 / 3, "#28d622"));
-        model.getGameState().getPlayers().add(new Lab2_Player("player2", 45, 500.0 / 3 * 2, "#bc8f8f"));
-
-        Thread gameThread = new Thread(()->{
-            while (true) {
-                model.nextTick();
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    System.out.println("Thread.sleep(100) thrown");
-                }
-            }
-        });
         gameThread.setDaemon(true);
         gameThread.start();
-        Lab2_Server server = new Lab2_Server();
-        server.StartServer();
+
+        StartServer();
     }
 }

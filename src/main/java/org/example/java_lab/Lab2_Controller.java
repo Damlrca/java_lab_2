@@ -27,20 +27,11 @@ public class Lab2_Controller {
     public void initialize() {
         model.addObserver((model) -> {
             Platform.runLater(() -> {
-                if (model.getGameState().getGameStatus() == Lab2_GameStatus.ONGOING) {
-                    clientGameState.removeFromPane(main_pane);
-                    clientGameState.update(model.getGameState());
-                    clientGameState.addToPane(main_pane, textLabel);
-                }
+                clientGameState.removeFromPane(main_pane);
+                clientGameState.update(model.getGameState());
+                clientGameState.addToPane(main_pane, textLabel);
             });
         });
-    }
-
-    @FXML
-    public void fire() {
-        if (scl != null) {
-            scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.FIRE, null));
-        }
     }
 
     private int port = 3124;
@@ -65,4 +56,24 @@ public class Lab2_Controller {
         }
     }
 
+    @FXML
+    public void fire() {
+        if (scl != null) {
+            scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.FIRE, null));
+        }
+    }
+
+    @FXML
+    public void ready() {
+        if (scl != null) {
+            scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.READY, null));
+        }
+    }
+
+    @FXML
+    public void pause() {
+        if (scl != null) {
+            scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.PAUSE, null));
+        }
+    }
 }

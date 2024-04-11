@@ -36,6 +36,30 @@ public class Lab2_Model {
         event();
     }
 
+    public boolean tryAddPlayer(String playerName) {
+        if (dao.tryAddPlayer(playerName)) {
+            event();
+            return true;
+        }
+        return false;
+    }
+
+    public void setReady(String playerName) {
+        dao.setReady(playerName);
+        event();
+        Lab2_Server.wakeUpGameThread();
+    }
+
+    public void setPause(String playerName) {
+        dao.setPause(playerName);
+        event();
+    }
+
+    public void resetGame(String additionalText) {
+        dao.resetGame(additionalText);
+        event();
+    }
+
     public Lab2_GameState getGameState() {
         return dao.getGameState();
     }

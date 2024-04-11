@@ -59,10 +59,10 @@ public class Lab2_SocketClient {
                         model.fire(playerName);
                     }
                     if (msg.getMsgAction() == Lab2_MsgAction.PAUSE) {
-
+                        model.setPause(playerName);
                     }
                     if (msg.getMsgAction() == Lab2_MsgAction.READY) {
-
+                        model.setReady(playerName);
                     }
                 } else {
                     Lab2_Resp r = readResp();
@@ -82,9 +82,13 @@ public class Lab2_SocketClient {
                     }
                     if (msg.getMsgAction() == Lab2_MsgAction.LOGIN) {
                         playerName = msg.getPlayerName();
-
-                        successfullyConnected = true;
-                        sendResp(new Lab2_Resp(Lab2_RespAction.LOGIN_OK, null));
+                        if (model.tryAddPlayer(playerName)) {
+                            successfullyConnected = true;
+                            sendResp(new Lab2_Resp(Lab2_RespAction.LOGIN_OK, model.getGameState()));
+                            continue;
+                        }
+                        successfullyConnected = false;
+                        sendResp(new Lab2_Resp(Lab2_RespAction.LOGIN_ERROR, null));
                     }
                 }
                 else {
@@ -95,6 +99,7 @@ public class Lab2_SocketClient {
                     }
                     if (r.getRespAction() == Lab2_RespAction.LOGIN_OK) {
                         successfullyConnected = true;
+                        model.setGameState(r.getGameState());
                     }
                 }
             }
