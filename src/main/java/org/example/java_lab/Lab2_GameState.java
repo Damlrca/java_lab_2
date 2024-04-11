@@ -83,7 +83,7 @@ public class Lab2_GameState {
         for (Lab2_Player player : players) {
             player.resetPlayer();
         }
-        generateText();
+        // generateText(); // resetGame function resets everything but text
         text += additionalText;
     }
 
