@@ -2,13 +2,14 @@ package org.example.java_lab;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Lab2_ClientGameState {
+    private static RadialGradient targetGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.15, true, CycleMethod.REPEAT, new Stop(0, Color.WHITE), new Stop(0.5, Color.RED), new Stop(1, Color.WHITE));
     private ArrayList<Shape> shapes = new ArrayList<>();
     private String text;
 
@@ -22,12 +23,12 @@ public class Lab2_ClientGameState {
             circle.setLayoutX(target.getPosX());
             circle.setLayoutY(target.getPosY());
             circle.setRadius(target.getRadius());
-            circle.setFill(Color.DEEPSKYBLUE);
+            circle.setFill(targetGradient);
             circle.setStroke(Color.BLACK);
             shapes.add(circle);
         }
         for (Lab2_Player player : gameState.getPlayers()) {
-            Polygon polygon = new Polygon(-25.0, -50.0, 0.0, 0.0, -25.0, 50.0);
+            Polygon polygon = new Polygon(-25.0, -45.0, 0.0, 0.0, -25.0, 45.0);
             polygon.setFill(Paint.valueOf(player.getPlayerColor()));
             polygon.setStroke(Color.BLACK);
             polygon.setLayoutX(player.getPlayerX());
