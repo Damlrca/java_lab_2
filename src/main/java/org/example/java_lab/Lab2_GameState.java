@@ -11,6 +11,7 @@ public class Lab2_GameState {
     private String text = new String();
 
     public void nextTick() {
+        if (gameStatus != Lab2_GameStatus.ONGOING) return;
         targets.nextTick();
         for (Lab2_Player player : players) {
             player.nextTick(targets);
@@ -28,16 +29,17 @@ public class Lab2_GameState {
     }
 
     public void fire(String playerName) {
+        if (gameStatus != Lab2_GameStatus.ONGOING) return;
         for (Lab2_Player player : players) {
             if (Objects.equals(player.getPlayerName(), playerName)) {
                 player.newBullet();
             }
         }
+        generateText();
     }
 
     public boolean tryAddPlayer(String playerName) {
-        if (gameStatus != Lab2_GameStatus.WAIT_PLAYERS) return false;
-        if (players.size() >= 4) return false;
+        if (gameStatus != Lab2_GameStatus.WAIT_PLAYERS || players.size() >= 4) return false;
         for (Lab2_Player player : players) {
             if (Objects.equals(player.getPlayerName(), playerName)) {
                 return false;
@@ -84,16 +86,13 @@ public class Lab2_GameState {
         generateText();
         text += additionalText;
     }
+
     public Lab2_Targets getTargets() {
         return targets;
     }
 
     public ArrayList<Lab2_Player> getPlayers() {
         return players;
-    }
-
-    public void setGameStatus(Lab2_GameStatus gameStatus) {
-        this.gameStatus = gameStatus;
     }
 
     public Lab2_GameStatus getGameStatus() {

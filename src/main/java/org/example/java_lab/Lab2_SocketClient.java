@@ -7,15 +7,15 @@ import java.net.Socket;
 
 public class Lab2_SocketClient {
     private Lab2_Model model = Lab2_BModel.getModel();
-    private Gson gson = new Gson();
+    private static Gson gson = new Gson();
     private Socket socket;
     private InputStream is;
     private OutputStream os;
     private DataInputStream dis;
     private DataOutputStream dos;
-    private boolean isServer = true;
+    private boolean isServer;
 
-    private Lab2_IObserver observer = (model) -> {
+    private Lab2_IObserver serverObserver = (model) -> {
         Lab2_Resp r = new Lab2_Resp(Lab2_RespAction.GAME_STATE, model.getGameState());
         this.sendResp(r);
     };
@@ -44,17 +44,14 @@ public class Lab2_SocketClient {
 
     private void run() {
         while (true) {
-            if (successfullyConnected) {
-                if (isServer) {
-                    Lab2_Msg msg = readMsg();
-                    if (msg == null) {
-                        System.out.println("client (" + socket.getPort() + ") disconnected (or error thrown)");
-                        model.removeObserver(observer);
-                        break;
-                    }
-                    if (msg.getMsgAction() == Lab2_MsgAction.GET) {
-
-                    }
+            if (isServer) {
+                Lab2_Msg msg = readMsg();
+                if (msg == null) {
+                    System.out.println("client (" + socket.getPort() + ") disconnected (or error thrown)");
+                    model.removeObserver(serverObserver);
+                    break;
+                }
+                if (successfullyConnected) {
                     if (msg.getMsgAction() == Lab2_MsgAction.FIRE) {
                         model.fire(playerName);
                     }
@@ -65,38 +62,23 @@ public class Lab2_SocketClient {
                         model.setReady(playerName);
                     }
                 } else {
-                    Lab2_Resp r = readResp();
-                    if (r == null) {
-                        System.out.println("server disconnected (or error thrown)");
-                        break;
-                    }
-                    model.setGameState(r.getGameState());
-                }
-            } else {
-                if (isServer) {
-                    Lab2_Msg msg = readMsg();
-                    if (msg == null) {
-                        System.out.println("client (" + socket.getPort() + ") disconnected (or error thrown)");
-                        model.removeObserver(observer);
-                        break;
-                    }
                     if (msg.getMsgAction() == Lab2_MsgAction.LOGIN) {
                         playerName = msg.getPlayerName();
                         if (model.tryAddPlayer(playerName)) {
                             successfullyConnected = true;
                             sendResp(new Lab2_Resp(Lab2_RespAction.LOGIN_OK, model.getGameState()));
-                            continue;
                         }
-                        successfullyConnected = false;
-                        sendResp(new Lab2_Resp(Lab2_RespAction.LOGIN_ERROR, null));
                     }
                 }
-                else {
-                    Lab2_Resp r = readResp();
-                    if (r == null) {
-                        System.out.println("server disconnected (or error thrown)");
-                        break;
-                    }
+            } else {
+                Lab2_Resp r = readResp();
+                if (r == null) {
+                    System.out.println("server disconnected (or error thrown)");
+                    break;
+                }
+                if (successfullyConnected) {
+                    model.setGameState(r.getGameState());
+                } else {
                     if (r.getRespAction() == Lab2_RespAction.LOGIN_OK) {
                         successfullyConnected = true;
                         model.setGameState(r.getGameState());
@@ -146,8 +128,8 @@ public class Lab2_SocketClient {
         return msg;
     }
 
-    public Lab2_IObserver getObserver() {
-        return observer;
+    public Lab2_IObserver getServerObserver() {
+        return serverObserver;
     }
 
     public boolean isSuccessfullyConnected() {

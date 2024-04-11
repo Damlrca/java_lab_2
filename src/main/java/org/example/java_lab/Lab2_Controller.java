@@ -28,7 +28,9 @@ public class Lab2_Controller {
         model.addObserver((model) -> {
             Platform.runLater(() -> {
                 clientGameState.removeFromPane(main_pane);
-                clientGameState.update(model.getGameState());
+                synchronized (model.getGameState()) {
+                    clientGameState.update(model.getGameState());
+                }
                 clientGameState.addToPane(main_pane, textLabel);
             });
         });

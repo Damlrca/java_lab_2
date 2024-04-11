@@ -15,10 +15,6 @@ public class Lab2_ClientGameState {
     public Lab2_ClientGameState() {
     }
 
-    Lab2_ClientGameState(Lab2_GameState gameState) {
-        update(gameState);
-    }
-
     void update(Lab2_GameState gameState) {
         shapes.clear();
         for (Lab2_Target target : gameState.getTargets()) {
@@ -50,6 +46,7 @@ public class Lab2_ClientGameState {
         }
         text = gameState.getText();
     }
+
     public void addToPane(Pane parentPane, Label textLabel) {
         for (Shape shape : shapes) {
             parentPane.getChildren().add(shape);
