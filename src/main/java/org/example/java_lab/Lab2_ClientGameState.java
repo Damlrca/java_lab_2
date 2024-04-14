@@ -3,14 +3,16 @@ package org.example.java_lab;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.*;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Lab2_ClientGameState {
-    private static RadialGradient targetGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.15, true, CycleMethod.REPEAT, new Stop(0, Color.WHITE), new Stop(0.5, Color.RED), new Stop(1, Color.WHITE));
-    private ArrayList<Shape> shapes = new ArrayList<>();
+    private static final RadialGradient targetGradient = new RadialGradient(0, 0, 0.5, 0.5, 0.15, true, CycleMethod.REPEAT, new Stop(0, Color.WHITE), new Stop(0.5, Color.RED), new Stop(1, Color.WHITE));
+    private final ArrayList<Shape> shapes = new ArrayList<>();
     private String text;
 
     public Lab2_ClientGameState() {

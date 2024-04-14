@@ -11,9 +11,9 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class Lab2_Controller {
-    private Lab2_Model model = Lab2_BModel.getModel();
+    private final Lab2_Model model = Lab2_BModel.getModel();
 
-    private Lab2_ClientGameState clientGameState = new Lab2_ClientGameState();
+    private final Lab2_ClientGameState clientGameState = new Lab2_ClientGameState();
 
     @FXML
     Pane main_pane;
@@ -34,7 +34,7 @@ public class Lab2_Controller {
         });
     }
 
-    private int port = 3124;
+    private final int port = 3124;
     private InetAddress ip = null;
     private Lab2_SocketClient scl = null;
 

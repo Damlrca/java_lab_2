@@ -1,8 +1,8 @@
 package org.example.java_lab;
 
 public class Lab2_Msg {
-    private Lab2_MsgAction msgAction;
-    private String playerName;
+    private final Lab2_MsgAction msgAction;
+    private final String playerName;
 
     public Lab2_Msg(Lab2_MsgAction msgAction, String playerName) {
         this.msgAction = msgAction;

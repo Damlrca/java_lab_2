@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Lab2_Targets implements Iterable<Lab2_Target> {
-    private ArrayList<Lab2_Target> targets = new ArrayList<>();
+    private final ArrayList<Lab2_Target> targets = new ArrayList<>();
 
     public Lab2_Targets() {
         targets.add(new Lab2_Target(450, 250, 30, 200, 5, 1));

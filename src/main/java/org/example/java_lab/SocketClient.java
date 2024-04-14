@@ -6,9 +6,9 @@ import java.io.*;
 import java.net.Socket;
 
 public class SocketClient {
-    private Model m = BModel.build();
-    private Gson gson = new Gson();
-    private Socket socket;
+    private final Model m = BModel.build();
+    private final Gson gson = new Gson();
+    private final Socket socket;
     private InputStream is;
     private OutputStream os;
     private DataInputStream dis;

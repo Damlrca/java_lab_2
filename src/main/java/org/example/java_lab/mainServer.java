@@ -1,14 +1,14 @@
 package org.example.java_lab;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class mainServer {
-    private Model m = BModel.build();
+    private final Model m = BModel.build();
 
-    private int port = 3124;
+    private final int port = 3124;
     private InetAddress ip = null;
 
     public void StartServer() {

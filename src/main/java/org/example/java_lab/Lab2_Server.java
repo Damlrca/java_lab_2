@@ -6,9 +6,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Lab2_Server {
-    private static Lab2_Model model = Lab2_BModel.getModel();
-    private static Object gameThreadMutex = new Object();
-    private static Thread gameThread = new Thread(() -> {
+    private static final Lab2_Model model = Lab2_BModel.getModel();
+    private static final Object gameThreadMutex = new Object();
+    private static final Thread gameThread = new Thread(() -> {
         try {
             while (true) {
                 Lab2_GameStatus gameStatus;
@@ -58,7 +58,7 @@ public class Lab2_Server {
         }
     }
 
-    private static int port = 3124;
+    private static final int port = 3124;
     private static InetAddress ip = null;
 
     public static void StartServer() {

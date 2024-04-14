@@ -6,16 +6,16 @@ import java.io.*;
 import java.net.Socket;
 
 public class Lab2_SocketClient {
-    private Lab2_Model model = Lab2_BModel.getModel();
-    private static Gson gson = new Gson();
-    private Socket socket;
+    private final Lab2_Model model = Lab2_BModel.getModel();
+    private static final Gson gson = new Gson();
+    private final Socket socket;
     private InputStream is;
     private OutputStream os;
     private DataInputStream dis;
     private DataOutputStream dos;
-    private boolean isServer;
+    private final boolean isServer;
 
-    private Lab2_IObserver serverObserver = (model) -> {
+    private final Lab2_IObserver serverObserver = (model) -> {
         Lab2_Resp r = new Lab2_Resp(Lab2_RespAction.GAME_STATE, model.getGameState());
         this.sendResp(r);
     };

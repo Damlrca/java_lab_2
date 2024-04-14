@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Lab2_GameState {
-    private static String[] funnyColors = {"#ab274f", "#7fffd4", "#1faee9", "#cd7f32"};
+    private static final String[] funnyColors = {"#ab274f", "#7fffd4", "#1faee9", "#cd7f32"};
     private Lab2_Targets targets = new Lab2_Targets();
-    private ArrayList<Lab2_Player> players = new ArrayList<>();
+    private final ArrayList<Lab2_Player> players = new ArrayList<>();
     private Lab2_GameStatus gameStatus = Lab2_GameStatus.WAIT_PLAYERS;
-    private String text = new String();
+    private String text = "";
 
     public void nextTick() {
         if (gameStatus != Lab2_GameStatus.ONGOING) return;

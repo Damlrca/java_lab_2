@@ -1,8 +1,12 @@
 package org.example.java_lab;
 
 public class Lab2_Target {
-    private double posX, posY, radius;
-    private int pos, speed, cost;
+    private final double posX;
+    private double posY;
+    private final double radius;
+    private int pos;
+    private final int speed;
+    private final int cost;
 
     public Lab2_Target(double posX, double posY, double radius, int pos, int speed, int cost) {
         this.posX = posX;

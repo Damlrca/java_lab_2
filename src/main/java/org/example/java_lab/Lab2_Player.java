@@ -1,18 +1,15 @@
 package org.example.java_lab;
 
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-
 import java.util.ArrayList;
 
 public class Lab2_Player {
-    private String playerName;
+    private final String playerName;
     private int countScore = 0;
     private int countBullets = 0;
-    private double playerX, playerY;
-    private ArrayList<Point> bullets = new ArrayList<>();
-    private String playerColor;
+    private final double playerX;
+    private final double playerY;
+    private final ArrayList<Point> bullets = new ArrayList<>();
+    private final String playerColor;
     private Lab2_PlayerStatus status = Lab2_PlayerStatus.PAUSE;
 
     public Lab2_Player(String playerName, double playerX, double playerY, String playerColor) {
