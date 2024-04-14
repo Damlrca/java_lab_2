@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Lab2_Model {
     Lab2_DataAccessObject dao = new Lab2_DataAccessObject();
-    private ArrayList<Lab2_IObserver> allObs = new ArrayList<>();
+    private final ArrayList<Lab2_IObserver> allObs = new ArrayList<>();
 
     public void addObserver(Lab2_IObserver o) {
         synchronized (allObs) {
@@ -27,21 +27,21 @@ public class Lab2_Model {
     }
 
     public void nextTick() {
-        synchronized (dao) {
+        synchronized (Lab2_BModel.getGameStateMutex()) {
             dao.nextTick();
             event();
         }
     }
 
     public void fire(String playerName) {
-        synchronized (dao) {
+        synchronized (Lab2_BModel.getGameStateMutex()) {
             dao.fire(playerName);
             event();
         }
     }
 
     public boolean tryAddPlayer(String playerName) {
-        synchronized (dao) {
+        synchronized (Lab2_BModel.getGameStateMutex()) {
             if (dao.tryAddPlayer(playerName)) {
                 event();
                 return true;
@@ -51,7 +51,7 @@ public class Lab2_Model {
     }
 
     public void setReady(String playerName) {
-        synchronized (dao) {
+        synchronized (Lab2_BModel.getGameStateMutex()) {
             dao.setReady(playerName);
             event();
             Lab2_Server.wakeUpGameThread();
@@ -59,27 +59,27 @@ public class Lab2_Model {
     }
 
     public void setPause(String playerName) {
-        synchronized (dao) {
+        synchronized (Lab2_BModel.getGameStateMutex()) {
             dao.setPause(playerName);
             event();
         }
     }
 
     public void resetGame(String additionalText) {
-        synchronized (dao) {
+        synchronized (Lab2_BModel.getGameStateMutex()) {
             dao.resetGame(additionalText);
             event();
         }
     }
 
     public Lab2_GameState getGameState() {
-        synchronized (dao) {
+        synchronized (Lab2_BModel.getGameStateMutex()) {
             return dao.getGameState();
         }
     }
 
     public void setGameState(Lab2_GameState gameState) {
-        synchronized (dao) {
+        synchronized (Lab2_BModel.getGameStateMutex()) {
             dao.setGameState(gameState);
             event();
         }

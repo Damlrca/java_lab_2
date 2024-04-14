@@ -11,14 +11,14 @@ public class Lab2_Server {
     private static Thread gameThread = new Thread(() -> {
         try {
             while (true) {
-                if (model.getGameState().getGameStatus() == Lab2_GameStatus.ONGOING) {
-                    boolean finalTick = false;
-                    synchronized (model.getGameState()) {
+                Lab2_GameStatus gameStatus;
+                synchronized (Lab2_BModel.getGameStateMutex()) {
+                    gameStatus = model.getGameState().getGameStatus();
+                    if (gameStatus == Lab2_GameStatus.ONGOING) {
                         model.nextTick();
 
-                        Lab2_GameState gameState = model.getGameState();
                         int mx = -1, count_mx = 0;
-                        for (Lab2_Player player : gameState.getPlayers()) {
+                        for (Lab2_Player player : model.getGameState().getPlayers()) {
                             if (player.getCountScore() > mx) {
                                 mx = player.getCountScore();
                                 count_mx = 1;
@@ -28,17 +28,19 @@ public class Lab2_Server {
                         }
                         if (mx >= 6 && count_mx == 1) {
                             String playerName = "";
-                            for (Lab2_Player player : gameState.getPlayers()) {
+                            for (Lab2_Player player : model.getGameState().getPlayers()) {
                                 if (player.getCountScore() == mx)
                                     playerName = player.getPlayerName();
                             }
                             model.resetGame("\nПобедитель: " + playerName + "\n\nДля начала следующей\nигры нажмите 'Готов'");
-                            finalTick = true;
                         }
+
+                        gameStatus = model.getGameState().getGameStatus();
                     }
-                    if (!finalTick) {
-                        Thread.sleep(100);
-                    }
+
+                }
+                if (gameStatus == Lab2_GameStatus.ONGOING) {
+                    Thread.sleep(100);
                 } else {
                     synchronized (gameThreadMutex) {
                         gameThreadMutex.wait();

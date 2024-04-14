@@ -64,9 +64,11 @@ public class Lab2_SocketClient {
                 } else {
                     if (msg.getMsgAction() == Lab2_MsgAction.LOGIN) {
                         playerName = msg.getPlayerName();
-                        if (model.tryAddPlayer(playerName)) {
-                            successfullyConnected = true;
-                            sendResp(new Lab2_Resp(Lab2_RespAction.LOGIN_OK, model.getGameState()));
+                        synchronized (Lab2_BModel.getGameStateMutex()) {
+                            if (model.tryAddPlayer(playerName)) {
+                                successfullyConnected = true;
+                                sendResp(new Lab2_Resp(Lab2_RespAction.LOGIN_OK, model.getGameState()));
+                            }
                         }
                     }
                 }
