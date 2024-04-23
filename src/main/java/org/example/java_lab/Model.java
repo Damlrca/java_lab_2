@@ -4,8 +4,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Model implements Iterable<Point> {
-    private final DAO dao = new DAO();
+    private DAO dao;
     private final ArrayList<IObserver> allObs = new ArrayList<>();
+
+    public Model(boolean isServer) {
+        if (isServer) {
+            dao = new DAO_H();
+        } else {
+            dao = new DAO();
+        }
+    }
 
     public void event() {
         for (IObserver o : allObs) {

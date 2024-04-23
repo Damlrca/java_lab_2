@@ -32,6 +32,8 @@ public class mainServer {
     }
 
     public static void main(String[] args) {
+        BModel.create_model(true);
+
         mainServer server = new mainServer();
         server.StartServer();
     }

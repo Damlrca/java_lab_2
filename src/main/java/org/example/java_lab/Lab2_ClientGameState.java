@@ -36,7 +36,7 @@ public class Lab2_ClientGameState {
             polygon.setLayoutX(player.getPlayerX());
             polygon.setLayoutY(player.getPlayerY());
             shapes.add(polygon);
-            for (Point bullet : player.getBullets()) {
+            for (Lab2_Point bullet : player.getBullets()) {
                 Rectangle rectangle = new Rectangle();
                 rectangle.setHeight(10.0);
                 rectangle.setWidth(10.0);

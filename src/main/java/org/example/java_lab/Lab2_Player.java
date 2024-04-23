@@ -8,7 +8,7 @@ public class Lab2_Player {
     private int countBullets = 0;
     private final double playerX;
     private final double playerY;
-    private final ArrayList<Point> bullets = new ArrayList<>();
+    private final ArrayList<Lab2_Point> bullets = new ArrayList<>();
     private final String playerColor;
     private Lab2_PlayerStatus status = Lab2_PlayerStatus.PAUSE;
 
@@ -20,8 +20,8 @@ public class Lab2_Player {
     }
 
     public void nextTick(Lab2_Targets targets) {
-        ArrayList<Point> bullets_to_remove = new ArrayList<>();
-        for (Point bullet : bullets) {
+        ArrayList<Lab2_Point> bullets_to_remove = new ArrayList<>();
+        for (Lab2_Point bullet : bullets) {
             bullet.setX(bullet.getX() + 10);
             for (Lab2_Target t : targets) {
                 double dx = t.getPosX() - bullet.getX();
@@ -36,13 +36,13 @@ public class Lab2_Player {
                 bullets_to_remove.add(bullet);
             }
         }
-        for (Point b : bullets_to_remove) {
+        for (Lab2_Point b : bullets_to_remove) {
             bullets.remove(b);
         }
     }
 
     public void newBullet() {
-        bullets.add(new Point(playerX, playerY));
+        bullets.add(new Lab2_Point(playerX, playerY));
         countBullets++;
     }
 
@@ -73,7 +73,7 @@ public class Lab2_Player {
         return playerY;
     }
 
-    public ArrayList<Point> getBullets() {
+    public ArrayList<Lab2_Point> getBullets() {
         return bullets;
     }
 

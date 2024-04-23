@@ -18,6 +18,7 @@ public class mainClient extends Application {
     }
 
     public static void main(String[] args) {
+        BModel.create_model(false);
         launch();
     }
 }
