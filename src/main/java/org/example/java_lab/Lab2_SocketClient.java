@@ -1,9 +1,14 @@
 package org.example.java_lab;
 
 import com.google.gson.Gson;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 public class Lab2_SocketClient {
     private final Lab2_Model model = Lab2_BModel.getModel();
@@ -16,7 +21,7 @@ public class Lab2_SocketClient {
     private final boolean isServer;
 
     private final Lab2_IObserver serverObserver = (model) -> {
-        Lab2_Resp r = new Lab2_Resp(Lab2_RespAction.GAME_STATE, model.getGameState());
+        Lab2_Resp r = new Lab2_Resp(Lab2_RespAction.GAME_STATE, model.getGameState(), null);
         this.sendResp(r);
     };
     private String playerName;
@@ -51,6 +56,11 @@ public class Lab2_SocketClient {
                     model.removeObserver(serverObserver);
                     break;
                 }
+                if (msg.getMsgAction() == Lab2_MsgAction.TABLE) {
+                    List<Lab3_TablePlayer> table = model.getTable();
+                    sendResp(new Lab2_Resp(Lab2_RespAction.TABLE, null, table));
+                    continue;
+                }
                 if (successfullyConnected) {
                     if (msg.getMsgAction() == Lab2_MsgAction.FIRE) {
                         model.fire(playerName);
@@ -67,16 +77,34 @@ public class Lab2_SocketClient {
                         synchronized (Lab2_BModel.getGameStateMutex()) {
                             if (model.tryAddPlayer(playerName)) {
                                 successfullyConnected = true;
-                                sendResp(new Lab2_Resp(Lab2_RespAction.LOGIN_OK, model.getGameState()));
+                                sendResp(new Lab2_Resp(Lab2_RespAction.LOGIN_OK, model.getGameState(), null));
                             }
                         }
                     }
                 }
-            } else {
+            } else { // isServer == false
                 Lab2_Resp r = readResp();
                 if (r == null) {
                     System.out.println("server disconnected (or error thrown)");
                     break;
+                }
+                if (r.getRespAction() == Lab2_RespAction.TABLE) {
+                    List<Lab3_TablePlayer> table = r.getTable();
+                    Platform.runLater(()-> {
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("lab3-table.fxml"));
+                            Scene scene = new Scene(loader.load());
+                            Stage stage = new Stage();
+                            stage.setTitle("Table");
+                            stage.setScene(scene);
+                            Lab3_TableController controller = loader.getController();
+                            controller.setTable(table);
+                            stage.show();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                    continue;
                 }
                 if (successfullyConnected) {
                     model.setGameState(r.getGameState());

@@ -4,5 +4,6 @@ public enum Lab2_MsgAction {
     FIRE,
     LOGIN,
     PAUSE,
-    READY
+    READY,
+    TABLE
 }

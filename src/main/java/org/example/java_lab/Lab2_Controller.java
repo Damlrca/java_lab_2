@@ -76,4 +76,11 @@ public class Lab2_Controller {
             scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.PAUSE, null));
         }
     }
+
+    @FXML
+    public void get_table() {
+        if (scl != null) {
+            scl.sendMsg(new Lab2_Msg(Lab2_MsgAction.TABLE, null));
+        }
+    }
 }

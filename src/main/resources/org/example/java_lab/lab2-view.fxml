@@ -31,6 +31,7 @@
             <TextField fx:id="textField_name" layoutX="14.0" layoutY="13.0" promptText="enter your name" />
             <Button layoutX="292.0" layoutY="13.0" mnemonicParsing="false" onAction="#ready" text="Готов" />
             <Button layoutX="348.0" layoutY="13.0" mnemonicParsing="false" onAction="#pause" text="Пауза" />
+            <Button layoutX="704.0" layoutY="13.0" mnemonicParsing="false" onAction="#get_table" prefHeight="25.0" prefWidth="134.0" text="Таблица лидеров" />
          </children></Pane>
    </bottom>
 </BorderPane>

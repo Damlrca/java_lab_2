@@ -32,6 +32,7 @@ public class Lab2_Server {
                                 if (player.getCountScore() == mx)
                                     playerName = player.getPlayerName();
                             }
+                            model.updateWinner(playerName);
                             model.resetGame("\nПобедитель: " + playerName + "\n\nДля начала следующей\nигры нажмите 'Готов'");
                         }
 

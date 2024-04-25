@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="528.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.java_lab.Lab3_TableController">
+   <center>
+      <Pane prefHeight="370.0" prefWidth="447.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="table" alignment="TOP_LEFT" layoutX="12.0" layoutY="12.0" prefHeight="521.0" prefWidth="504.0" text="table">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
